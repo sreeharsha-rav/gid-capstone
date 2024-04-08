@@ -15,6 +15,16 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
+    public boolean hasUserWithName(String name) {
+        return userRepository.findFirstByName(name).isPresent();
+    }
+
+    @Override
+    public boolean hasUserWithEmail(String email) {
+        return userRepository.findFirstByEmail(email).isPresent();
+    }
+
+    @Override
     public UserDTO createUser(SignupDTO signupDTO) {
         User user = new User();
         user.setName(signupDTO.getName());

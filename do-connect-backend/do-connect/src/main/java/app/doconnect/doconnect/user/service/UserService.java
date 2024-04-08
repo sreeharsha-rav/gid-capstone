@@ -5,4 +5,8 @@ import app.doconnect.doconnect.user.dto.UserDTO;
 
 public interface UserService {
     UserDTO createUser(SignupDTO signupDTO);
+
+    boolean hasUserWithName(String name);
+
+    boolean hasUserWithEmail(String email);
 }
