@@ -23,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
       </button>
       <!-- Title -->
       <span>DoConnect</span>
-      <span class="example-spacer"></span>
+      <span class="spacer"></span>
       <!-- User profile or login/signup -->
       @if (isUserLoggedIn) {
         <button mat-icon-button>
@@ -42,7 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
       }
     </mat-toolbar>
     <!-- Sidebar -->
-    <app-sidebar></app-sidebar>
+    <!-- <app-sidebar [isSidebarOpen]="isSidebarOpen"]></app-sidebar> -->
   `,
   styles: ``
 })
