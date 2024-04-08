@@ -1,6 +1,6 @@
 package app.doconnect.doconnect.user.service;
 
-import app.doconnect.doconnect.user.dto.SignupDTO;
+import app.doconnect.doconnect.user.dto.SignupRequest;
 import app.doconnect.doconnect.user.dto.UserDTO;
 import app.doconnect.doconnect.user.entity.User;
 import app.doconnect.doconnect.user.repository.UserRepository;
@@ -25,11 +25,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDTO createUser(SignupDTO signupDTO) {
+    public UserDTO createUser(SignupRequest signupRequest) {
         User user = new User();
-        user.setName(signupDTO.getName());
-        user.setEmail(signupDTO.getEmail());
-        user.setPassword(new BCryptPasswordEncoder().encode(signupDTO.getPassword()));
+        user.setName(signupRequest.getName());
+        user.setEmail(signupRequest.getEmail());
+        user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
         User createdUser = userRepository.save(user);
         UserDTO createdUserDTO = new UserDTO();
         createdUserDTO.setId(createdUser.getId());

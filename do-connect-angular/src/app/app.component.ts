@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
   ],
   template: `
     <app-header></app-header>
-    <router-outlet />
+    <router-outlet/>
   `,
   styles: [],
 })

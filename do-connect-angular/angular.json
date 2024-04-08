@@ -1,13 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "cli": {
-    "packageManager": "pnpm",
-    "analytics": false
-  },
   "newProjectRoot": "projects",
   "projects": {
-    "do-connect-frontend": {
+    "do-connect-angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -44,7 +40,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/do-connect-frontend",
+            "outputPath": "dist/do-connect-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -94,10 +90,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "do-connect-frontend:build:production"
+              "buildTarget": "do-connect-angular:build:production"
             },
             "development": {
-              "buildTarget": "do-connect-frontend:build:development"
+              "buildTarget": "do-connect-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -105,10 +101,13 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "do-connect-frontend:build"
+            "buildTarget": "do-connect-angular:build"
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

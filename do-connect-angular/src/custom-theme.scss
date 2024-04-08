@@ -12,19 +12,19 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$do-connect-frontend-primary: mat.define-palette(mat.$indigo-palette);
-$do-connect-frontend-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$do-connect-angular-primary: mat.define-palette(mat.$indigo-palette);
+$do-connect-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$do-connect-frontend-warn: mat.define-palette(mat.$red-palette);
+$do-connect-angular-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$do-connect-frontend-theme: mat.define-light-theme((
+$do-connect-angular-theme: mat.define-light-theme((
   color: (
-    primary: $do-connect-frontend-primary,
-    accent: $do-connect-frontend-accent,
-    warn: $do-connect-frontend-warn,
+    primary: $do-connect-angular-primary,
+    accent: $do-connect-angular-accent,
+    warn: $do-connect-angular-warn,
   ),
   typography: mat.define-typography-config(),
   density: 0
@@ -33,5 +33,5 @@ $do-connect-frontend-theme: mat.define-light-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($do-connect-frontend-theme);
+@include mat.all-component-themes($do-connect-angular-theme);
 

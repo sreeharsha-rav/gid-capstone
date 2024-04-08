@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +11,9 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     MatToolbarModule,
     MatIconModule,
-    SidebarComponent
+    MatButtonModule,
+    SidebarComponent,
+    RouterLink
   ],
   template: `
     <!-- Header -->
@@ -22,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
         }
       </button>
       <!-- Title -->
-      <span>DoConnect</span>
+      <span class="title">DoConnect</span>
       <span class="spacer"></span>
       <!-- User profile or login/signup -->
       @if (isUserLoggedIn) {
@@ -31,20 +35,33 @@ import { MatIconModule } from '@angular/material/icon';
           <span>Profile</span>
         </button>
       } @else {
-        <button mat-icon-button>
-          <mat-icon>login</mat-icon>
+        <button mat-stroked-button color="primary" routerLink="/login">
           <span>Login</span>
         </button>
-        <button mat-icon-button>
-          <mat-icon>person_add</mat-icon>
+        <button mat-flat-button color="primary" routerLink="/signup">
           <span>Sign Up</span>
         </button>
       }
     </mat-toolbar>
     <!-- Sidebar -->
-    <!-- <app-sidebar [isSidebarOpen]="isSidebarOpen"]></app-sidebar> -->
+    <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
   `,
-  styles: ``
+  styles: `
+    mat-toolbar {
+      background-color: #FEFEFE;
+      border-bottom: 1px solid #ddd;
+      color: #333;
+    }
+    button {
+      margin-right: 10px;
+    }
+    .title {
+      font-size: 1.2em;
+    }
+    .spacer {
+      flex: 1 1 auto;
+    }
+  `
 })
 export class HeaderComponent {
   isUserLoggedIn = false;
