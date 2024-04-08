@@ -3,7 +3,11 @@ package app.doconnect.doconnect.security.controller;
 import app.doconnect.doconnect.security.dto.AuthenticationRequest;
 import app.doconnect.doconnect.security.dto.AuthenticationResponse;
 import app.doconnect.doconnect.security.util.JwtUtil;
+import app.doconnect.doconnect.user.entity.User;
+import app.doconnect.doconnect.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 public class AuthenticationController {
@@ -27,32 +32,45 @@ public class AuthenticationController {
     private UserDetailsService userDetailsService;
 
     @Autowired
+    private UserRepository userRepositorty;
+
+    @Autowired
     private JwtUtil jwtTokenUtil;
+
+    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String HEADER_STRING = "Authorization";
 
     /*
      * Method to create an authentication token
      * @param authenticationRequest - the authentication request
      * @param response - the HTTP response
      * @throws IOException
-     * @throws BadCredentialsException
-     * @throws DisabledException
+     * @throws JSONException
      * @return void
      */
     @PostMapping("/authenticate")
-    public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException {
+    public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getName(), authenticationRequest.getPassword()));
         } catch (BadCredentialsException e) {
             throw new BadCredentialsException("Incorrect username or password", e);
         } catch (DisabledException disabledException) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "User is not created");
-            return null;
         }
         // Get user details
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getName());
+        Optional<User> optionalUser = userRepositorty.findFirstByName(userDetails.getUsername());
         // Generate token
         final String jwtToken = jwtTokenUtil.generateToken(userDetails.getUsername());
 
-        return new AuthenticationResponse(jwtToken);
+        if (optionalUser.isPresent()) {
+            response.getWriter().write(new JSONObject()
+                        .put("userId", optionalUser.get().getId())
+                        .toString());
+        }
+
+        response.addHeader("Access-Control-Expose-Headers", "Authorization");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept, X-Custom-header");
+        response.setHeader(HEADER_STRING, TOKEN_PREFIX + jwtToken);
     }
 }

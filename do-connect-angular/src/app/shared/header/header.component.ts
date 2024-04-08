@@ -3,7 +3,8 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { StorageService } from '../../login_signup/service/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -32,10 +33,12 @@ import { RouterLink } from '@angular/router';
       @if (isUserLoggedIn) {
         <button mat-icon-button>
           <mat-icon>account_circle</mat-icon>
-          <span>Profile</span>
+        </button>
+        <button mat-stroked-button color="warn">
+          <span>Logout</span>
         </button>
       } @else {
-        <button mat-stroked-button color="primary" routerLink="/login">
+        <button mat-stroked-button color="primary" routerLink="/login" (click)="logout()">
           <span>Login</span>
         </button>
         <button mat-flat-button color="primary" routerLink="/signup">
@@ -51,6 +54,11 @@ import { RouterLink } from '@angular/router';
       background-color: #FEFEFE;
       border-bottom: 1px solid #ddd;
       color: #333;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 5;
     }
     button {
       margin-right: 10px;
@@ -64,10 +72,27 @@ import { RouterLink } from '@angular/router';
   `
 })
 export class HeaderComponent {
-  isUserLoggedIn = false;
+  isUserLoggedIn: boolean = false;
   isSidebarOpen = false;
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.updateLoginStatus();
+  }
+
+  private updateLoginStatus() {
+    this.isUserLoggedIn = StorageService.isUserLoggedIn();
+  }
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+
+  logout() {
+    StorageService.logoutUser();
+    this.updateLoginStatus();
+    this.router.navigate(['/login']);
+  }
+
 }

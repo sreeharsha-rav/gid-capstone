@@ -38,7 +38,9 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   styles: 
   `
     .sidenav-container {
-      height: 100%;
+      margin-top: 60px;
+      height: calc(100vh - 60px);
+      position: relative;
     }
     mat-sidenav {
       padding: 10px;
