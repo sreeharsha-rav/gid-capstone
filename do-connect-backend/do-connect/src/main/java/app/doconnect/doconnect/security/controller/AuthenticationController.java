@@ -62,13 +62,14 @@ public class AuthenticationController {
         Optional<User> optionalUser = userRepositorty.findFirstByName(userDetails.getUsername());
         // Generate token
         final String jwtToken = jwtTokenUtil.generateToken(userDetails.getUsername());
-
+        // Add user details to response
         if (optionalUser.isPresent()) {
             response.getWriter().write(new JSONObject()
                         .put("userId", optionalUser.get().getId())
+                        .put("name", optionalUser.get().getName())
                         .toString());
         }
-
+        // Add token to response with authorization header
         response.addHeader("Access-Control-Expose-Headers", "Authorization");
         response.setHeader("Access-Control-Allow-Headers", "Authorization, X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept, X-Custom-header");
         response.setHeader(HEADER_STRING, TOKEN_PREFIX + jwtToken);

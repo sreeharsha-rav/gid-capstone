@@ -3,6 +3,14 @@ import { Injectable } from '@angular/core';
 const TOKEN = 'c_token';
 const USER = 'c_user';
 
+/*
+* StorageService is a service class that provides methods to store and retrieve user information and token in local storage.
+* The saveUser() method saves the user information in local storage.
+* The saveToken() method saves the token in local storage.
+* The getToken() method retrieves the token from local storage.
+* The isUserLoggedIn() method checks if the user is logged in.
+* The logoutUser() method removes the token and user information from local storage.
+*/
 @Injectable({
   providedIn: 'root'
 })

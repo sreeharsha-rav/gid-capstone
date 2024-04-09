@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { StorageService } from './storage.service';
+import { inject, Injectable } from '@angular/core';
+//import { StorageService } from './storage.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { throwError, catchError, Observable, tap, map } from 'rxjs';
+import { throwError, catchError, Observable, tap, map, Subject } from 'rxjs';
+import { User } from '../model/User.model';
 
 const LOGIN_URL = 'http://localhost:8080/authenticate';
 export const AUTH_HEADER = "authorization";
@@ -11,28 +12,45 @@ export const AUTH_HEADER = "authorization";
 })
 export class AuthLoginService {
 
+  http: HttpClient = inject(HttpClient);
+  user = new Subject<User>();
+
   constructor(
-    private http: HttpClient,
-    private storageService: StorageService
+    //private storageService: StorageService
   ) { }
 
+  // loginUser() method sends a POST request to the server with the login credentials.
   loginUser(loginRequest: any): Observable<any> {
     return this.http.post(LOGIN_URL, loginRequest, 
       { observe: 'response' }
     ).pipe(
+        catchError(this.handleError),
         tap(__ => this.log("User Authentication")),
         map((res: HttpResponse<any>) => {
-          this.storageService.saveUser(res.body);
-          const bearerToken = res.headers.get(AUTH_HEADER)?.substring(7);
-          this.storageService.saveToken(bearerToken ?? ''); // Fix: Add nullish coalescing operator
-          return res;
+          this.handleCreateUser(res);
         }),
-        catchError(this.handleError)
     );
+  }
+
+  // logoutUser() method removes the token and user information user subject.
+  logoutUser() {
+    const user = new User(0, '', '');
+    this.user.next(user);
   }
 
   log(message: string) {
     console.log(`AuthLoginService: ${message}`);
+  }
+
+  private handleCreateUser(res: HttpResponse<any>) {
+    const userId = res.body.userId;
+    const userName = res.body.name;
+    const bearerToken = res.headers.get(AUTH_HEADER);
+    const tokenSubstring = bearerToken ? bearerToken.substring(7) : '';
+    const user = new User(userId, userName, tokenSubstring);
+    this.user.next(user);
+    // this.storageService.saveUser({ userId, userName });
+    // this.storageService.saveToken(bearerToken ?? '');
   }
 
   private handleError(error: any) {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { throwError, catchError, Observable } from 'rxjs';
 
@@ -9,7 +9,9 @@ const SIGNUP_URL = 'http://localhost:8080/signup';
 })
 export class AuthSignupService {
 
-  constructor(private http: HttpClient) { }
+  http: HttpClient = inject(HttpClient);
+
+  constructor() { }
 
   signupUser(signupRequest: any): Observable<any> {
     return this.http.post(SIGNUP_URL, signupRequest).pipe(

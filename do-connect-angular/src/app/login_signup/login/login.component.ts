@@ -90,7 +90,6 @@ export class LoginComponent {
     login() {
       this.authLoginService.loginUser(this.loginForm.value).subscribe(
         (response) => {
-          console.log(response);
           this.snackBar.open('Login successful', 'Close', {
             duration: 2000
           });

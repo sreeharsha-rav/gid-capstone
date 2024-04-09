@@ -111,10 +111,8 @@ export class SignupComponent {
   }
 
   registerNewUser() {
-    console.log(this.signupForm.value);
     this.authSignupService.signupUser(this.signupForm.value).subscribe({
       next: response => {
-        console.log(response);
         if (response.id !== null) {
           this.snackBar.open('User registered successfully', 'Close', {
             duration: 2000
