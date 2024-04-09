@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // logic to get user from database
+        // TODO: write logic to get user from database
         Optional<User> userOptional = userRepository.findFirstByName(username);
         if (userOptional.isEmpty()) {
             throw new UsernameNotFoundException("User not found with name: " +  username);

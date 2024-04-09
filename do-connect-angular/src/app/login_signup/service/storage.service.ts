@@ -9,7 +9,7 @@ const USER = 'c_user';
 * The saveToken() method saves the token in local storage.
 * The getToken() method retrieves the token from local storage.
 * The isUserLoggedIn() method checks if the user is logged in.
-* The logoutUser() method removes the token and user information from local storage.
+* The removeUser() method removes the token and user information from local storage.
 */
 @Injectable({
   providedIn: 'root'
@@ -19,38 +19,26 @@ export class StorageService {
   constructor() { }
 
   public saveUser(user: any) {
-    if (typeof window !== 'undefined') {
-      window.localStorage.removeItem(USER);
-      window.localStorage.setItem(USER, JSON.stringify(user));
-    }
+    localStorage.removeItem(USER);
+    localStorage.setItem(USER, JSON.stringify(user));
   }
 
   public saveToken(token: string) {
-    if (typeof window !== 'undefined') {
-      window.localStorage.removeItem(TOKEN);
-      window.localStorage.setItem(TOKEN, token);
-    }
-  }
-
-  static getToken(): string | null {
-    if (typeof window !== 'undefined') {
-      return window.localStorage.getItem(TOKEN) || null;
-    } 
-    return null;
+    localStorage.removeItem(TOKEN);
+    localStorage.setItem(TOKEN, token);
   }
 
   static isUserLoggedIn(): boolean {
-    if (this.getToken() == null) {
-      return false;
-    }
-    return true;
+    return localStorage.getItem(USER) !== null;
   }
 
-  static logoutUser() {
-    if (typeof window !== 'undefined') {
-      window.localStorage.removeItem(TOKEN);
-      window.localStorage.removeItem(USER);
-    }
+  static getToken(): string | null {
+    return localStorage.getItem(TOKEN);
+  }
+
+  static removeUser() {
+    localStorage.removeItem(USER);
+    localStorage.removeItem(TOKEN);
   }
 
 }

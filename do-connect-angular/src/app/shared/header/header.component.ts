@@ -88,6 +88,7 @@ export class HeaderComponent {
     this.userSubject = this.authLogin.user.subscribe((user: User) => {
       this.isUserLoggedIn = user ? true : false;
     });
+    //this.isUserLoggedIn = StorageService.isUserLoggedIn();
   }
 
   toggleSidebar() {

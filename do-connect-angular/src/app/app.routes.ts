@@ -1,9 +1,12 @@
 import { Routes } from '@angular/router';
-import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './shared/home/home.component';
+import { MessageComponent } from './message/message/message.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { LoginComponent } from './login_signup/login/login.component';
 import { SignupComponent } from './login_signup/signup/signup.component';
+
+import { UserGuard } from './shared/auth-guards/user-guard/user.guard';
+
 
 export const routes: Routes = [
     // { path: '', component: HeaderComponent},
@@ -11,5 +14,6 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent},
     { path: 'login', component: LoginComponent},
     { path: 'signup', component: SignupComponent},
+    { path: 'messages', component: MessageComponent, canActivate: [UserGuard]},
     { path: '**', component: PageNotFoundComponent}
 ];
