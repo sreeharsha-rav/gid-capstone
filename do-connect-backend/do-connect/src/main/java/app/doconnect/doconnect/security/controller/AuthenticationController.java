@@ -22,6 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.Optional;
 
+/*
+ * Controller class to define the REST API endpoints for the Authentication service
+ * createAuthenticationToken - to create an authentication token
+ */
 @RestController
 public class AuthenticationController {
 

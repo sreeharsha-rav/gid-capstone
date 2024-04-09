@@ -12,6 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/*
+ * This class is used to configure the security for the application
+ * securityFilterChain - method to configure the security for the application
+ * passwordEncoder - method to encode the password
+ * authenticationManager - method to authenticate the user
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity

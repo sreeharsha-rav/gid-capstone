@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import app.doconnect.doconnect.user.service.UserService;
 
+/*
+ * Controller class to define the REST API endpoint for the Signup service
+ * createUser - to create a new user
+ */
 @RestController
 @RequestMapping("/signup")
 public class SignupController {

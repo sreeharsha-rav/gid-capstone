@@ -8,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/*
+ * This class implements the UserService interface and provides the implementation for the methods.
+ * createUser - to create a new user
+ * hasUserWithName - to check if a user with the given name exists
+ * hasUserWithEmail - to check if a user with the given email exists
+ */
 @Service
 public class UserServiceImpl implements UserService{
 

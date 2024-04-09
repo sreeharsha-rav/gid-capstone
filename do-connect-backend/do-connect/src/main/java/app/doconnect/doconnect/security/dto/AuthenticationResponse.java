@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/*
+ * This class is used to send the JWT token back to the client after successful authentication.
+ * jwtToken: JWT token
+ */
 @Getter
 @Setter
 @AllArgsConstructor

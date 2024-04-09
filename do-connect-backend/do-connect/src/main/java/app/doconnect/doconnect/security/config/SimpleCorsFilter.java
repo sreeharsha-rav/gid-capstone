@@ -12,6 +12,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * This class is used to enable CORS for the client app
+ * init - method to initialize the filter
+ * doFilter - method to filter the request and response
+ * destroy - method to destroy the filter
+ */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCorsFilter implements Filter {
