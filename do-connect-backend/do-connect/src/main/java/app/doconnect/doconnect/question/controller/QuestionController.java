@@ -1,7 +1,7 @@
 package app.doconnect.doconnect.question.controller;
 
-import app.doconnect.doconnect.question.dto.QuestionDTO;
 import app.doconnect.doconnect.question.dto.QuestionRequest;
+import app.doconnect.doconnect.question.dto.QuestionResponse;
 import app.doconnect.doconnect.question.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ public class QuestionController {
 
     @PostMapping("/questions")
     public ResponseEntity<?> addQuestion(@RequestBody QuestionRequest questionRequest) {
-        QuestionDTO createdQuestion = questionService.addQuestion(questionRequest);
+        QuestionResponse createdQuestion = questionService.addQuestion(questionRequest);
         if (createdQuestion == null) {
             return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
         }
@@ -28,7 +28,7 @@ public class QuestionController {
 
     @GetMapping("/questions")
     public ResponseEntity<?> getAllQuestions() {
-        List<QuestionDTO> questionList = questionService.getAllQuestions();
+        List<QuestionResponse> questionList = questionService.getAllQuestions();
         if (questionList == null) {
             return new ResponseEntity<>("No questions found", HttpStatus.NOT_FOUND);
         }
@@ -37,25 +37,25 @@ public class QuestionController {
 
     @GetMapping("/questions/{id}")
     public ResponseEntity<?> getQuestionById(@PathVariable Long id) {
-        QuestionDTO questionDTO = questionService.getQuestionById(id);
-        if (questionDTO == null) {
+        QuestionResponse questionResponse = questionService.getQuestionById(id);
+        if (questionResponse == null) {
             return new ResponseEntity<>("Question not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(questionDTO, HttpStatus.OK);
+        return new ResponseEntity<>(questionResponse, HttpStatus.OK);
     }
 
     @PutMapping("/questions/{id}")
     public ResponseEntity<?> updateQuestion(@PathVariable Long id, @RequestBody QuestionRequest questionRequest) {
-        QuestionDTO updatedQuestion = questionService.updateQuestion(id, questionRequest);
+        QuestionResponse updatedQuestion = questionService.updateQuestion(id, questionRequest);
         if (updatedQuestion == null) {
             return new ResponseEntity<>("Question not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(updatedQuestion, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/questions/{id}")
     public ResponseEntity<?> deleteQuestion(@PathVariable Long id) {
-        QuestionDTO deletedQuestion = questionService.deleteQuestion(id);
+        QuestionResponse deletedQuestion = questionService.deleteQuestion(id);
         if (deletedQuestion == null) {
             return new ResponseEntity<>("Question not found", HttpStatus.NOT_FOUND);
         }

@@ -1,15 +1,15 @@
 package app.doconnect.doconnect.question.service;
 
-import app.doconnect.doconnect.question.dto.QuestionDTO;
 import app.doconnect.doconnect.question.dto.QuestionRequest;
+import app.doconnect.doconnect.question.dto.QuestionResponse;
 
 import java.util.List;
 
 public interface QuestionService {
-    QuestionDTO addQuestion(QuestionRequest questionRequest);
-    List<QuestionDTO> getAllQuestions();
-    QuestionDTO getQuestionById(Long id);
-    QuestionDTO updateQuestion(Long id, QuestionRequest questionRequest);
-    QuestionDTO deleteQuestion(Long id);
+    QuestionResponse addQuestion(QuestionRequest questionRequest);
+    List<QuestionResponse> getAllQuestions();
+    QuestionResponse getQuestionById(Long id);
+    QuestionResponse updateQuestion(Long id, QuestionRequest questionRequest);
+    QuestionResponse deleteQuestion(Long id);
 
 }

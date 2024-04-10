@@ -1,7 +1,7 @@
 package app.doconnect.doconnect.question.service;
 
-import app.doconnect.doconnect.question.dto.QuestionDTO;
 import app.doconnect.doconnect.question.dto.QuestionRequest;
+import app.doconnect.doconnect.question.dto.QuestionResponse;
 import app.doconnect.doconnect.question.entity.Question;
 import app.doconnect.doconnect.question.repository.QuestionRespository;
 import app.doconnect.doconnect.user.entity.User;
@@ -24,7 +24,7 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionRespository questionRespository;
 
     @Override
-    public QuestionDTO addQuestion(QuestionRequest questionRequest) {
+    public QuestionResponse addQuestion(QuestionRequest questionRequest) {
         Optional<User> optionalUser = userRepository.findById(questionRequest.getUserId());
         if (optionalUser.isPresent()) {
             Question question = new Question();
@@ -35,46 +35,56 @@ public class QuestionServiceImpl implements QuestionService {
             question.setDatePosted(new Date());
             System.out.println("question = " + question);
             Question createdQuestion = questionRespository.save(question);
-            // Create a new QuestionDTO object and set the values
-            QuestionDTO createdQuestionDTO = new QuestionDTO();
-            createdQuestionDTO.setId(createdQuestion.getId());
-            createdQuestionDTO.setTitle(createdQuestion.getTitle());
-            createdQuestionDTO.setBody(createdQuestion.getBody());
-            createdQuestionDTO.setTopics(createdQuestion.getTopics());
-            createdQuestionDTO.setUserId(createdQuestion.getUser().getId());
-            return createdQuestionDTO;
+            // Create a new QuestionResponse object and set the values
+            QuestionResponse questionResponse = new QuestionResponse();
+            questionResponse.setId(createdQuestion.getId());
+            questionResponse.setTitle(createdQuestion.getTitle());
+            questionResponse.setBody(createdQuestion.getBody());
+            questionResponse.setTopics(createdQuestion.getTopics());
+            questionResponse.setUserId(createdQuestion.getUser().getId());
+            questionResponse.setDatePosted(createdQuestion.getDatePosted());
+            return questionResponse;
         }
         return null;
     }
 
     @Override
-    public List<QuestionDTO> getAllQuestions() {
+    public List<QuestionResponse> getAllQuestions() {
+        // TODO: Add pagination and optimize
         List<Question> questions = questionRespository.findAll();
-        List<QuestionDTO> questionDTOs = new ArrayList<>();
+        List<QuestionResponse> questionResponses = new ArrayList<>();
         for (Question question : questions) {
-            QuestionDTO questionDTO = new QuestionDTO();
-            questionDTO.setId(question.getId());
-            questionDTO.setTitle(question.getTitle());
-            questionDTOs.add(questionDTO);
+            QuestionResponse questionResponse = new QuestionResponse();
+            questionResponse.setId(question.getId());
+            questionResponse.setTitle(question.getTitle());
+            questionResponse.setBody(question.getBody());
+            questionResponse.setTopics(question.getTopics());
+            questionResponse.setUserId(question.getUser().getId());
+            questionResponse.setDatePosted(question.getDatePosted());
+            questionResponses.add(questionResponse);
         }
-        return questionDTOs;
+        return questionResponses;
     }
 
     @Override
-    public QuestionDTO getQuestionById(Long id) {
+    public QuestionResponse getQuestionById(Long id) {
         Optional<Question> optionalQuestion = questionRespository.findById(id);
         if (optionalQuestion.isPresent()) {
             Question question = optionalQuestion.get();
-            QuestionDTO questionDTO = new QuestionDTO();
-            questionDTO.setId(question.getId());
-            questionDTO.setTitle(question.getTitle());
-            return questionDTO;
+            QuestionResponse questionResponse = new QuestionResponse();
+            questionResponse.setId(question.getId());
+            questionResponse.setTitle(question.getTitle());
+            questionResponse.setBody(question.getBody());
+            questionResponse.setTopics(question.getTopics());
+            questionResponse.setUserId(question.getUser().getId());
+            questionResponse.setDatePosted(question.getDatePosted());
+            return questionResponse;
         }
         return null;
     }
 
     @Override
-    public QuestionDTO updateQuestion(Long id, QuestionRequest questionRequest) {
+    public QuestionResponse updateQuestion(Long id, QuestionRequest questionRequest) {
         Optional<Question> optionalQuestion = questionRespository.findById(id);
         if (optionalQuestion.isPresent()) {
             Question question = optionalQuestion.get();
@@ -82,24 +92,33 @@ public class QuestionServiceImpl implements QuestionService {
             question.setBody(questionRequest.getBody());
             question.setTopics(questionRequest.getTopics());
             Question updatedQuestion = questionRespository.save(question);
-            QuestionDTO updatedQuestionDTO = new QuestionDTO();
-            updatedQuestionDTO.setId(updatedQuestion.getId());
-            updatedQuestionDTO.setTitle(updatedQuestion.getTitle());
-            return updatedQuestionDTO;
+            // Create a new QuestionResponse object and set the values
+            QuestionResponse questionResponse = new QuestionResponse();
+            questionResponse.setId(updatedQuestion.getId());
+            questionResponse.setTitle(updatedQuestion.getTitle());
+            questionResponse.setBody(updatedQuestion.getBody());
+            questionResponse.setTopics(updatedQuestion.getTopics());
+            questionResponse.setUserId(updatedQuestion.getUser().getId());
+            questionResponse.setDatePosted(updatedQuestion.getDatePosted());
+            return questionResponse;
         }
         return null;
     }
 
     @Override
-    public QuestionDTO deleteQuestion(Long id) {
+    public QuestionResponse deleteQuestion(Long id) {
         Optional<Question> optionalQuestion = questionRespository.findById(id);
         if (optionalQuestion.isPresent()) {
             Question question = optionalQuestion.get();
             questionRespository.deleteById(id);
-            QuestionDTO questionDTO = new QuestionDTO();
-            questionDTO.setId(question.getId());
-            questionDTO.setTitle(question.getTitle());
-            return questionDTO;
+            QuestionResponse questionResponse = new QuestionResponse();
+            questionResponse.setId(question.getId());
+            questionResponse.setTitle(question.getTitle());
+            questionResponse.setBody(question.getBody());
+            questionResponse.setTopics(question.getTopics());
+            questionResponse.setUserId(question.getUser().getId());
+            questionResponse.setDatePosted(question.getDatePosted());
+            return questionResponse;
         }
         return null;
     }

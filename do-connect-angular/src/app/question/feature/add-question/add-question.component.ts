@@ -5,7 +5,6 @@ import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { QuestionService } from '../../data-access/question.service';
-import { Question } from '../../data-access/question.interface';
 import { MatDivider } from '@angular/material/divider';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -16,6 +15,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {AsyncPipe} from '@angular/common';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {StorageService} from '../../../login_signup/service/storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { QuestionRequest } from '../../data-access/question-request.interface';
 
 
 @Component({
@@ -64,7 +65,7 @@ export class AddQuestionComponent {
   topics: string[] = []; // Initial value
   allTopics: string[] = []; // All topics - TODO: Fetch from API
 
-  constructor() {
+  constructor(private snackBar: MatSnackBar) {
     // Filter topics
     this.filteredTopics = this.topicCtrl.valueChanges.pipe(
       startWith(null),
@@ -122,8 +123,7 @@ export class AddQuestionComponent {
   // Add question
   addQuestion(): void {
     // Prepare question request
-    const questionReq: Question = {
-      id: 0, // id doesn't matter as it will be auto-generated
+    const questionReq: QuestionRequest = {
       title: this.addForm.get('title')?.value,
       body: this.addForm.get('body')?.value,
       topics: this.topics,
@@ -133,7 +133,15 @@ export class AddQuestionComponent {
     this.questionService.addQuestion(questionReq).subscribe({
       next: (res) => {
         console.log(res);
-        console.log('Question added successfully');
+        if (res) {
+          this.snackBar.open('Question added successfully', 'Close', {
+            duration: 2000,
+          });
+        } else {
+          this.snackBar.open('Failed to add question', 'Close', {
+            duration: 2000,
+          });
+        }
       },
       error: (error) => {
         console.error(error);

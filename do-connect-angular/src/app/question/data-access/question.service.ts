@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Question } from './question.interface';
 import { StorageService } from '../../login_signup/service/storage.service';
+import { QuestionRequest } from './question-request.interface';
+import { QuestionResponse } from './question-response.interface';
 
 const QUESTION_URL = 'http://localhost:8080/api/questions';
 
@@ -23,14 +25,14 @@ export class QuestionService {
     )
   }
 
-  addQuestion(question: any): Observable<any> {
+  addQuestion(question: QuestionRequest): Observable<Request> {
     return this.http.post<any>(QUESTION_URL, question, {
       headers: this.createAuthHeader()
     });
   }
 
-  getAllQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(QUESTION_URL, {
+  getAllQuestions(): Observable<QuestionResponse[]> {
+    return this.http.get<QuestionResponse[]>(QUESTION_URL, {
       headers: this.createAuthHeader()
     });
   }
@@ -44,7 +46,9 @@ export class QuestionService {
   }
 
   deleteQuestion(id: number): Observable<any> {
-    return this.http.delete(`${QUESTION_URL}/${id}`);
+    return this.http.delete(`${QUESTION_URL}/${id}`, {
+      headers: this.createAuthHeader()
+    });
   }
 
 }

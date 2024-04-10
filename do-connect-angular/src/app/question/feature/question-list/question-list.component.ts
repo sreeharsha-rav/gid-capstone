@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDivider } from '@angular/material/divider';
-import { Question } from '../../data-access/question.interface';
 import { QuestionService } from '../../data-access/question.service';
+import { QuestionResponse } from '../../data-access/question-response.interface';
 
 @Component({
   selector: 'app-question-list',
@@ -25,9 +25,8 @@ import { QuestionService } from '../../data-access/question.service';
         <button mat-raised-button color="primary" (click)="openAddDialog()">Add Question</button>
       </div>
       <mat-divider></mat-divider>
-      @for (question of questionList; track question.id) {
-        <app-question [question]="question"></app-question>
-      }
+      <br>
+      <app-question [questionList]="questionList"></app-question>
     </div>
   `,
   styles: `
@@ -45,7 +44,7 @@ import { QuestionService } from '../../data-access/question.service';
   `
 })
 export class QuestionListComponent {
-  questionList: Question[];
+  questionList: QuestionResponse[];
 
   private questionService = inject(QuestionService);
 
@@ -65,6 +64,7 @@ export class QuestionListComponent {
     this.questionService.getAllQuestions().subscribe({
       next: (questions) => {
         this.questionList = questions;
+        console.log(this.questionList);
       },
       error: (error) => {
         console.error(error);
