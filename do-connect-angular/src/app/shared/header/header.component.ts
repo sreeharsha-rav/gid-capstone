@@ -51,7 +51,7 @@ import { Subscription } from 'rxjs';
       }
     </mat-toolbar>
     <!-- Sidebar -->
-    <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
+    <app-sidebar [isSidebarOpen]="isSidebarOpen" [isUserLoggedIn]="isUserLoggedIn"></app-sidebar>
   `,
   styles: `
     mat-toolbar {
@@ -85,10 +85,10 @@ export class HeaderComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.userSubject = this.authLogin.user.subscribe((user: User) => {
-      this.isUserLoggedIn = user ? true : false;
-    });
-    //this.isUserLoggedIn = StorageService.isUserLoggedIn();
+    // this.userSubject = this.authLogin.user.subscribe((user: User) => {
+    //   this.isUserLoggedIn = user ? true : false;
+    // });
+    this.isUserLoggedIn = StorageService.isUserLoggedIn();
   }
 
   toggleSidebar() {

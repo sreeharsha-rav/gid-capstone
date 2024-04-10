@@ -10,7 +10,11 @@ import { Component } from '@angular/core';
         <h1>Welcome to DoConnect!</h1>
       </div>
       <div class="hero-text">
-        <p>Your go-to Q&A platform for technical queries. Get expert answers and solutions in programming, software development, and more. Join the community, ask questions, and gain insights.</p>
+        <p>Your go-to Q&A platform for technical queries.</p>
+        <p>Get expert answers and solutions in programming, software development, and more.</p>
+        <p>Join the community, ask questions, and gain insights.</p>
+        <br>
+        <p><b>Start by logging in or signing up!</b></p>
       </div>
     </div>
   `,

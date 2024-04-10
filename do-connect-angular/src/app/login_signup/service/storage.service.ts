@@ -29,11 +29,19 @@ export class StorageService {
   }
 
   static isUserLoggedIn(): boolean {
-    return localStorage.getItem(USER) !== null;
+    if (localStorage && localStorage.getItem(USER) && localStorage.getItem(TOKEN)) {
+      return true;
+    }
+    return false;
   }
 
   static getToken(): string | null {
     return localStorage.getItem(TOKEN);
+  }
+
+  static getUserId(): any {
+    const user = JSON.parse(localStorage.getItem(USER) || '{}');
+    return user.id;
   }
 
   static removeUser() {

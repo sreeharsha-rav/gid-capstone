@@ -93,7 +93,7 @@ export class LoginComponent {
           this.snackBar.open('Login successful', 'Close', {
             duration: 2000
           });
-          this.router.navigate(['/home']);
+          this.router.navigate(['/questions']);
         },
         (error) => {
           console.error(error);

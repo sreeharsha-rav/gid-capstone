@@ -3,6 +3,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { StorageService } from '../../login_signup/service/storage.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,16 +22,21 @@ import { RouterOutlet, RouterLink } from '@angular/router';
       <br>
       <!-- Navigation links -->
       <div class="nav-links">
-        <button mat-button routerLink="/home">Home</button>
-        <button mat-button routerLink="/questions">Questions</button>
-        <button mat-button routerLink="/topics">Topics</button>
-        <button mat-button routerLink="/messages">Messages</button>
+        @if (isUserLoggedIn === false) {
+          <button mat-button routerLink="/home">Home</button>
+        }
+
+        @if (isUserLoggedIn === true) {
+          <button mat-button routerLink="/questions">Questions</button>
+          <button mat-button routerLink="/topics">Topics</button>
+          <button mat-button routerLink="/messages">Messages</button>
+        }
       </div>
       <br>
       <mat-divider></mat-divider>
       <br>
     </mat-sidenav>
-    <mat-sidenav-content class="content">
+    <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
     </mat-sidenav-container>
@@ -46,9 +52,6 @@ import { RouterOutlet, RouterLink } from '@angular/router';
       padding: 10px;
       width: auto;
     }
-    .content {
-      padding: 20px;
-    }
     .nav-links {
       display: flex;
       flex-direction: column;
@@ -61,5 +64,6 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 })
 export class SidebarComponent {
   @Input() isSidebarOpen = false;
+  @Input() isUserLoggedIn = false;
 
 }
