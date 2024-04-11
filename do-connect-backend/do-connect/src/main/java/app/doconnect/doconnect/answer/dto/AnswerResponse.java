@@ -1,17 +1,15 @@
-package app.doconnect.doconnect.question.dto;
+package app.doconnect.doconnect.answer.dto;
 
 import app.doconnect.doconnect.user.dto.UserResponse;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
-public class QuestionResponse {
+public class AnswerResponse {
     private Long id;
-    private String title;
-    private String body;
+    private String answer;
     private Date datePosted;
-    private List<String> topics;
+    private Long questionId;
     private UserResponse user;
 }

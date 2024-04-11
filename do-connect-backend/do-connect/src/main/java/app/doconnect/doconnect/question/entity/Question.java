@@ -1,5 +1,6 @@
 package app.doconnect.doconnect.question.entity;
 
+import app.doconnect.doconnect.topic.entity.Topic;
 import app.doconnect.doconnect.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -17,7 +18,7 @@ import java.util.List;
  * description - description of the question
  * datePosted - date when the question was posted
  * topics - list of topics associated with the question
- * userId - user ID of the user who posted the question
+ * user - the user who posted the question
  */
 @Data
 @Entity
@@ -38,8 +39,11 @@ public class Question {
     @Column(name = "date_posted", nullable = false)
     private Date datePosted;
 
-    @Column(name = "topics")
-    private List<String> topics;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "question_topic",
+            joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_id"))
+    private List<Topic> topics;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)

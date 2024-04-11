@@ -10,14 +10,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+ * Controller class to define the REST API endpoints for the Question service
+ * addQuestion - to add a new question
+ * getQuestionById - to get a question by its ID
+ * getAllQuestions - to get all questions
+ * updateQuestion - to update a question
+ * deleteQuestion - to delete a question
+ */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/questions")
 public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
 
-    @PostMapping("/questions")
+    @PostMapping
     public ResponseEntity<?> addQuestion(@RequestBody QuestionRequest questionRequest) {
         QuestionResponse createdQuestion = questionService.addQuestion(questionRequest);
         if (createdQuestion == null) {
@@ -26,7 +34,7 @@ public class QuestionController {
         return new ResponseEntity<>(createdQuestion, HttpStatus.CREATED);
     }
 
-    @GetMapping("/questions")
+    @GetMapping
     public ResponseEntity<?> getAllQuestions() {
         List<QuestionResponse> questionList = questionService.getAllQuestions();
         if (questionList == null) {
@@ -35,7 +43,7 @@ public class QuestionController {
         return new ResponseEntity<>(questionList, HttpStatus.OK);
     }
 
-    @GetMapping("/questions/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getQuestionById(@PathVariable Long id) {
         QuestionResponse questionResponse = questionService.getQuestionById(id);
         if (questionResponse == null) {
@@ -44,7 +52,7 @@ public class QuestionController {
         return new ResponseEntity<>(questionResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/questions/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateQuestion(@PathVariable Long id, @RequestBody QuestionRequest questionRequest) {
         QuestionResponse updatedQuestion = questionService.updateQuestion(id, questionRequest);
         if (updatedQuestion == null) {
@@ -53,7 +61,7 @@ public class QuestionController {
         return new ResponseEntity<>(updatedQuestion, HttpStatus.OK);
     }
 
-    @DeleteMapping("/questions/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteQuestion(@PathVariable Long id) {
         QuestionResponse deletedQuestion = questionService.deleteQuestion(id);
         if (deletedQuestion == null) {
