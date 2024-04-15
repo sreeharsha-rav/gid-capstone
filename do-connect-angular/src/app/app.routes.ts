@@ -8,6 +8,7 @@ import { UserGuard } from './shared/auth-guards/user-guard/user.guard';
 import { QuestionListComponent } from './question/feature/question-list/question-list.component';
 import { TopicListComponent } from './topic/feature/topic-list/topic-list.component';
 import { TopicQuestionsComponent } from './topic/feature/topic-questions/topic-questions.component';
+import { AnswerListComponent } from './answer/feature/answer-list/answer-list.component';
 
 
 export const routes: Routes = [
@@ -18,6 +19,7 @@ export const routes: Routes = [
     { path: 'signup', component: SignupComponent},
     // Pages after login
     {path: 'questions', component: QuestionListComponent, canActivate: [UserGuard]},
+    { path: 'answers/question/:id', component: AnswerListComponent, canActivate: [UserGuard]},
     { path: 'topics', component: TopicListComponent, canActivate: [UserGuard]},
     { path: 'topics/:id/questions', component: TopicQuestionsComponent, canActivate: [UserGuard]},
     { path: 'messages', component: MessageComponent, canActivate: [UserGuard]},

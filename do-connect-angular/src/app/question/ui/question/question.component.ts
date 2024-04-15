@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
 import { QuestionResponse } from '../../data-access/question-response.interface';
-import { formatDate } from '../../util/formatDate';
+import { formatDate } from '../../../shared/util/formatDate';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -31,7 +31,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     <div class="question-card">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>{{ question.title }}</mat-card-title>
+          <mat-card-title>
+            <a class="link" (click)="navigateToAnswers(question)">{{ question.title }}</a>
+          </mat-card-title>
           <!-- Question Edit/Delete Menu -->
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
             <mat-icon>more_vert</mat-icon>
@@ -67,6 +69,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     .question-card {
       margin-bottom: 5px;
       padding: 20px;
+    }
+    mat-card-title {
+      cursor: pointer;
+      color: blue;
+      font-size: 1.3rem;
+      background-color: transparent;
+    }
+    mat-card-title:hover {
+      text-decoration: underline;
+      color: darkblue;
     }
     mat-card {
       width: 100%;
@@ -115,17 +127,27 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   * router: Router - Angular router service
   * snackBar: MatSnackBar - Angular material snack bar service
   * getFormattedDate(date: string) - formats the date in a readable format
+  * navigateToAnswers(question: QuestionResponse) - navigates to the answers page for a question
   * deleteQuestion(id: number) - deletes a question from the database
   */
 export class QuestionComponent {
   @Input() questionList!: QuestionResponse[];
 
   private questionService = inject(QuestionService);
+  private router = inject(Router);
 
   constructor(private snackBar: MatSnackBar) {}
 
   getFormattedDate(date: string): string {
     return formatDate(date);
+  }
+
+  navigateToAnswers(question: QuestionResponse) {
+    this.router.navigateByUrl(`/answers/question/${question.id}`, {
+      state: { 
+        question: question 
+      }     
+    });
   }
 
   deleteQuestion(id: number) {
