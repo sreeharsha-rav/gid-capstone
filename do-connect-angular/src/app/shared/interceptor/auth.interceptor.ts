@@ -4,6 +4,9 @@ import { Observable } from "rxjs";
 import { StorageService } from "../../login_signup/service/storage.service";
 
 @Injectable()
+/*
+ * Auth Interceptor - this interceptor is used to add the JWT token to the HTTP requests
+ */
 export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

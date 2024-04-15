@@ -22,6 +22,7 @@ import { QuestionResponse } from '../../data-access/question-response.interface'
     <div class="question-container">
       <div class="question-header">
         <h2>Questions</h2>
+        <!-- TODO: Add OUTPUT event emitter to update question list after adding a new question -->
         <button mat-raised-button color="primary" (click)="openAddDialog()">Add Question</button>
       </div>
       <mat-divider></mat-divider>
@@ -43,6 +44,15 @@ import { QuestionResponse } from '../../data-access/question-response.interface'
     }
   `
 })
+/*
+ * Question List Component - this component is used to display a list of questions
+ * questionList: QuestionResponse[] - list of questions
+ * questionService: QuestionService - service to handle all CRUD operations for questions
+ * matDialog: MatDialog - dialog service to open dialogs
+ * openAddDialog() - opens the add question dialog
+ * getAllQuestions() - retrieves all questions from the database
+ * ngOnInit() - lifecycle hook that is called after Angular has initialized all data-bound properties of a directive
+ */
 export class QuestionListComponent {
   questionList: QuestionResponse[];
 
@@ -64,7 +74,6 @@ export class QuestionListComponent {
     this.questionService.getAllQuestions().subscribe({
       next: (questions) => {
         this.questionList = questions;
-        console.log(this.questionList);
       },
       error: (error) => {
         console.error(error);

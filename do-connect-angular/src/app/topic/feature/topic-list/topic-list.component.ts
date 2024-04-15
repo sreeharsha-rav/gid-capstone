@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TopicComponent } from '../../ui/topic/topic.component';
 import { TopicResponse } from '../../data-access/topic-response.interface';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
     <div class="topic-container">
       <div class="topic-header">
         <h2>Topics</h2>
-        <button mat-raised-button color="primary" (click)="openTopicDialog()">Add Topic</button>
+        <!-- TODO: Add OUTPUT event emitter to update topic list after adding a new topic -->
+        <button mat-raised-button color="primary" (click)="openTopicDialog()" >Add Topic</button>
       </div>
       <mat-divider></mat-divider>
       <br>
@@ -45,11 +46,26 @@ import { MatButtonModule } from '@angular/material/button';
     }
   `
 })
+/*
+ * Topic List Component - this component is used to display a list of topics
+ * topicList: TopicResponse[] - list of topics
+ * topicService: TopicService - service to get topics
+ * matDialog: MatDialog - dialog to add a new topic
+ * getAllTopics(): void - get all topics
+ * openTopicDialog(): void - open dialog to add a new topic
+ * ngOnInit(): void - lifecycle hook to get all topics
+ */
 export class TopicListComponent {
   topicList: TopicResponse[];
 
+  private topicService = inject(TopicService);
+
   constructor(private matDialog: MatDialog) {
     this.topicList = [];
+  }
+
+  ngOnInit() {
+    this.getAllTopics();
   }
 
   openTopicDialog() {
@@ -57,7 +73,14 @@ export class TopicListComponent {
   }
 
   getAllTopics() {
-    // this.topicList = this.topicService.getAllTopics();
+    this.topicService.getAllTopics().subscribe(
+      (data) => {
+        this.topicList = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
 }

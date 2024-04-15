@@ -77,6 +77,14 @@ import { Router } from '@angular/router';
   }
   `
 })
+/*
+ * The SignupComponent class is used to create a new user account by sending a POST request to the server with the signup credentials.
+ * signupForm: FormGroup - form to sign up a user
+ * constructor() - initialize the component
+ * ngOnInit() - initialize the component
+ * confirmationValidator() - validate the password and confirm password fields
+ * registerNewUser() - sign up a user
+ */
 export class SignupComponent {
 
   signupForm: FormGroup = this.formBuilder.group({});

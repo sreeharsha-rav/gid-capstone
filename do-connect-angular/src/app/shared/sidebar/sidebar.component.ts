@@ -3,7 +3,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterOutlet, RouterLink } from '@angular/router';
-import { StorageService } from '../../login_signup/service/storage.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -62,6 +61,9 @@ import { StorageService } from '../../login_signup/service/storage.service';
 
   `
 })
+/*
+ * Sidebar Component - this component is used to display the sidebar
+ */
 export class SidebarComponent {
   @Input() isSidebarOpen = false;
   @Input() isUserLoggedIn = false;

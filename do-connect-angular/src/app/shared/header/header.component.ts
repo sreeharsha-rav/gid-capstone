@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -75,6 +75,16 @@ import { Subscription } from 'rxjs';
     }
   `
 })
+/*
+ * Header Component - this component is used to display the header of the application
+ * isUserLoggedIn: boolean - flag to check if the user is logged in
+ * isSidebarOpen: boolean - flag to check if the sidebar is open
+ * userSubject: Subscription - subscription to the user
+ * authLogin: AuthLoginService - service to handle all login and logout operations
+ * toggleSidebar() - toggles the sidebar
+ * logout() - logs out the user
+ * ngOnDestroy() - lifecycle hook that is called when the component is destroyed
+ */
 export class HeaderComponent {
   isUserLoggedIn = false;
   isSidebarOpen = false;
@@ -85,6 +95,7 @@ export class HeaderComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
+    // ALTERNATIVE IMPLEMENTATION for isUserLoggedIn
     // this.userSubject = this.authLogin.user.subscribe((user: User) => {
     //   this.isUserLoggedIn = user ? true : false;
     // });

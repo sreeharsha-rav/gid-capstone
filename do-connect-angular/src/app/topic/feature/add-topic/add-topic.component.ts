@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDivider } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
+import { TopicService } from '../../data-access/topic.service';
+import { TopicRequest } from '../../data-access/topic-request.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-topic',
@@ -24,8 +27,8 @@ import { MatInput } from '@angular/material/input';
       <mat-dialog-content>
         <form [formGroup]="addForm">
           <mat-form-field appearance="outline">
-            <mat-label>Topic Title</mat-label>
-            <input matInput placeholder="Enter Topic Title" type="text" name="title" formControlName="title" required>
+            <mat-label>Topic Name</mat-label>
+            <input matInput placeholder="Enter Topic Name" type="text" name="name" formControlName="name" required>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Topic Description</mat-label>
@@ -53,20 +56,52 @@ import { MatInput } from '@angular/material/input';
     }
   `
 })
+/*
+ * Add Topic Component - this component is used to add a new topic
+ * addForm: any - form to add a topic
+ * constructor() - initialize the component
+ * addTopic() - add a new topic
+ * topicService: TopicService - service to add a topic
+ * matSnackBar: MatSnackBar - material snack bar to show messages
+ */
 export class AddTopicComponent {
   addForm: any;
 
-  constructor() {}
+  constructor(private matSnackBar: MatSnackBar) {}
+
+  private topicService = inject(TopicService);
 
   ngOnInit() {
     this.addForm = new FormGroup({
-      title: new FormControl(''),
+      name: new FormControl(''),
       description: new FormControl('')
     });
   }
 
   addTopic() {
-    // Add topic logic
+    // convert form values to TopicRequest object
+    const topicRequest: TopicRequest = {
+      name: this.addForm.value.name,
+      description: this.addForm.value.description
+    }
+    // call the service to add the topic
+    this.topicService.addTopic(topicRequest).subscribe({
+      next: (res) => {
+        if (res) {
+          this.addForm.reset();
+          this.matSnackBar.open('Topic added successfully', 'Close', {
+            duration: 2000
+          });
+        } else {
+          this.matSnackBar.open('Failed to add topic', 'Close', {
+            duration: 2000
+          });
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 
 }

@@ -52,6 +52,19 @@ import { QuestionRequest } from '../../data-access/question-request.interface';
 })
 /*
  * Add Question Component - this component is used to add a new question
+ * addForm: any - form to add a question
+ * separatorKeysCodes: number[] - separator key codes
+ * topicCtrl: FormControl - topic control
+ * filteredTopics: Observable<string[]> - filtered topics
+ * topics: string[] - topics
+ * allTopics: string[] - all topics
+ * constructor() - initialize the component
+ * ngOnInit() - initialize the form
+ * add(event: MatChipInputEvent) - add a topic
+ * remove(topic: string) - remove a topic
+ * selected(event: MatAutocompleteSelectedEvent) - select a topic
+ * private _filter(value: string) - filter topics
+ * addQuestion() - add a question by utilizing the question service to make an API call
  */
 export class AddQuestionComponent {
   addForm: any;

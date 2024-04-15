@@ -1,12 +1,16 @@
 import { inject, Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from "@angular/router";
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
 import { StorageService } from "../../../login_signup/service/storage.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserGuard implements CanActivate {
+/*
+ * UserGuard - this guard is used to prevent a user from accessing pages that require authentication if they are not logged in
+ * canActivate() - checks if the user is logged in and redirects them to the login page if they are not
+ */
+export class UserGuard {
 
   private router = inject(Router);
 

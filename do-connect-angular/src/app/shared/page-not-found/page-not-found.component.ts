@@ -29,6 +29,9 @@ import { Component } from '@angular/core';
   }
   `
 })
+/*
+ * Page Not Found Component - this component is used to display a 404 page not found message
+ */
 export class PageNotFoundComponent {
 
 }

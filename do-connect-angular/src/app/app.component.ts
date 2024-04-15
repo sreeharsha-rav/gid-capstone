@@ -17,4 +17,9 @@ import { HeaderComponent } from './shared/header/header.component';
 })
 export class AppComponent {
   title = 'do-connect-frontend';
+
+  constructor() {}
+
+  ngOnInit() {}
+  
 }

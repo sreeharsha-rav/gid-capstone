@@ -1,19 +1,23 @@
 import { inject, Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from "@angular/router";
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
-export class NoAuthGuard implements CanActivate {
+/*
+ * NoAuthGuard - this guard is used to prevent a user from accessing the login/signup page if they are already logged in
+ * canActivate() - checks if the user is already logged in and redirects them to the questions page
+*/
+export class NoAuthGuard {
 
   private router = inject(Router);
 
   constructor() { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    // If the token is present, the user is already logged in, so redirect to the home page.
+    // If the token is present, the user is already logged in, so redirect to the questions page.
     if (localStorage.getItem('token')) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/questions']);
       return false;
     }
     return true;

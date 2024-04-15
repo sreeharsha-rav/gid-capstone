@@ -33,6 +33,9 @@ import { Component } from '@angular/core';
   }
   `
 })
+/*
+ * Home Component - this component is used to display the home page
+ */
 export class HomeComponent {
 
 }

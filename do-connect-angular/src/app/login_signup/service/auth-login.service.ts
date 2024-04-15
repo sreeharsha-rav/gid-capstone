@@ -11,6 +11,14 @@ export const AUTH_HEADER = "authorization"; // Authorization header key
 @Injectable({
   providedIn: 'root'
 })
+/*
+ * The AuthLoginService class is used to authenticate a user by sending a POST request to the server with the login credentials.
+ * The loginUser() method sends a POST request to the server with the login credentials.
+ * The logoutUser() method removes the token and user information user subject.
+ * The log() method logs a message to the console.
+ * The handleCreateUser() method extracts the user ID, user name, and bearer token from the response and creates a new User object.
+ * The handleError() method logs the error message to the console and returns an error message.
+ */
 export class AuthLoginService {
 
   http: HttpClient = inject(HttpClient);

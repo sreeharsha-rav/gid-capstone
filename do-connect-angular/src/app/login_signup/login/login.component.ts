@@ -69,6 +69,13 @@ import { Router } from '@angular/router';
   }
   `
 })
+/*
+ * Login Component - this component is used to log in a user
+ * loginForm: FormGroup - form to log in a user
+ * constructor() - initialize the component
+ * ngOnInit() - initialize the component
+ * login() - log in a user
+ */
 export class LoginComponent {
 
   loginForm: FormGroup = this.fb.group({});
