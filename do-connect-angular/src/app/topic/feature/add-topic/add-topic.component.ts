@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDivider } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
@@ -65,6 +65,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
  * matSnackBar: MatSnackBar - material snack bar to show messages
  */
 export class AddTopicComponent {
+
   addForm: any;
 
   constructor(private matSnackBar: MatSnackBar) {}
@@ -78,6 +79,13 @@ export class AddTopicComponent {
     });
   }
 
+  /*
+   * addTopic: add a new topic
+   * @returns void
+   * @sideEffects resets the form
+   * @sideEffects shows a message on success or failure
+   * @sideEffects calls the service to add the topic
+   */
   addTopic() {
     // convert form values to TopicRequest object
     const topicRequest: TopicRequest = {
@@ -88,7 +96,7 @@ export class AddTopicComponent {
     this.topicService.addTopic(topicRequest).subscribe({
       next: (res) => {
         if (res) {
-          this.addForm.reset();
+          this.addForm.reset(); // reset the form
           this.matSnackBar.open('Topic added successfully', 'Close', {
             duration: 2000
           });

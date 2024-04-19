@@ -21,7 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
       <div class="topic-header">
         <h2>Topics</h2>
         <!-- TODO: Add OUTPUT event emitter to update topic list after adding a new topic -->
-        <button mat-raised-button color="primary" (click)="openTopicDialog()" >Add Topic</button>
+        <button mat-raised-button color="primary" (click)="openAddTopicDialog()" >Add Topic</button>
       </div>
       <mat-divider></mat-divider>
       <br>
@@ -68,8 +68,19 @@ export class TopicListComponent {
     this.getAllTopics();
   }
 
-  openTopicDialog() {
-    this.matDialog.open(AddTopicComponent);
+  /*
+   * Open dialog to add a new topic
+   * @returns void
+   * @param void
+   * @example openTopicDialog()
+   * @sideEffects open dialog to add a new topic
+   * @sideEffects get all topics after adding a new topic
+   */
+  openAddTopicDialog() {
+    const dialogRef = this.matDialog.open(AddTopicComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getAllTopics();
+    });
   }
 
   getAllTopics() {

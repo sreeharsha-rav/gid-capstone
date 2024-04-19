@@ -8,6 +8,8 @@ import { TopicResponse } from '../../data-access/topic-response.interface';
 import { Router } from '@angular/router';
 import { TopicService } from '../../data-access/topic.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { EditTopicComponent } from '../../feature/edit-topic/edit-topic.component';
 
 @Component({
   selector: 'app-topic',
@@ -17,7 +19,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    EditTopicComponent
   ],
   template: `
     <div class="grid-list">
@@ -34,7 +37,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="openEditDialog(topic)">
                   <span>Edit</span>
                 </button>
                 <button mat-menu-item (click)="deleteTopic(topic.id)">
@@ -95,6 +98,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 /*
  * Topic Component - this component is used to display a list of topics
  * topicList: TopicResponse[] - list of topics
+ * navigateToQuestions(currentTopic: TopicResponse) - navigate to the questions page for the selected topic
+ * openEditDialog(currentTopic: TopicResponse) - open the edit dialog for the selected topic
  * deleteTopic(id: number) - delete a topic by utilizing the topic service to make an API call
  */
 export class TopicComponent {
@@ -103,11 +108,25 @@ export class TopicComponent {
   private topicService = inject(TopicService);
   private router = inject(Router);
 
-  constructor(private matSnackBar: MatSnackBar) { }
+  constructor(
+    private matSnackBar: MatSnackBar,
+    private matDialog: MatDialog
+  ) { }
 
   navigateToQuestions(currentTopic: TopicResponse) {
     this.router.navigateByUrl(`/topics/${currentTopic.id}/questions`, {
       state: { topic: currentTopic }
+    });
+  }
+
+  openEditDialog(currentTopic: TopicResponse) {
+    // Open the edit dialog
+    const dialogRef = this.matDialog.open(EditTopicComponent, {
+      data: { 
+        id: currentTopic.id,
+        name: currentTopic.name,
+        description: currentTopic.description
+      }
     });
   }
 

@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { AnswerResponse } from '../../data-access/answer-response.interface';
 import { formatDate } from '../../../shared/util/formatDate';
 
@@ -8,13 +10,32 @@ import { formatDate } from '../../../shared/util/formatDate';
   selector: 'app-answer',
   standalone: true,
   imports: [
-    MatDivider
+    MatDivider,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule
   ],
   template: `
   @for (answer of answerList; track answer.id) {
     <div class="answer-tile">
       <div class="answer-content">
-        <p>{{ answer.answer }}</p>
+        <div>
+          <p>{{ answer.answer }}</p>
+        </div>
+        <!-- Answer Edit/Delete Menu -->
+        <div class="edit-delete">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
       </div>
       <div class="answer-footer">
         <p class="user"><i>Posted by:</i> {{ answer.user.name }}</p>
@@ -33,7 +54,11 @@ import { formatDate } from '../../../shared/util/formatDate';
     }
     .answer-content {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .edit-delete {
+      align: right;
     }
     .answer-footer {
       display: flex;

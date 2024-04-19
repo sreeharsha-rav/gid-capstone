@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AnswerService } from '../../data-access/answer.service';
 import { AnswerResponse } from '../../data-access/answer-response.interface';
 import { AnswerComponent } from '../../ui/answer/answer.component';
+import { PostAnswerComponent } from '../post-answer/post-answer.component';
 
 @Component({
   selector: 'app-answer-list',
@@ -19,7 +20,8 @@ import { AnswerComponent } from '../../ui/answer/answer.component';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    AnswerComponent
+    AnswerComponent,
+    PostAnswerComponent
   ],
   template: `
     <!-- Selected Question -->
@@ -73,6 +75,8 @@ import { AnswerComponent } from '../../ui/answer/answer.component';
         <app-answer [answerList]="answerList"></app-answer>
       }
     </div>
+    <!-- Post Answer -->
+    <app-post-answer></app-post-answer>
   `,
   styles: `
     .question-card {
