@@ -8,6 +8,8 @@ import { formatDate } from '../../../shared/util/formatDate';
 import { AnswerService } from '../../data-access/answer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { EditAnswerComponent } from '../../feature/edit-answer/edit-answer.component';
 
 @Component({
   selector: 'app-answer',
@@ -17,7 +19,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    EditAnswerComponent
   ],
   template: `
   @for (answer of answerList; track answer.id) {
@@ -32,7 +35,7 @@ import { MatDialogModule } from '@angular/material/dialog';
               <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="openEditDialog(answer)">
               <span>Edit</span>
             </button>
             <button mat-menu-item (click)="deleteAnswer(answer.id)">
@@ -78,7 +81,10 @@ export class AnswerComponent {
 
   private answerService = inject(AnswerService);
 
-  constructor( private matSnackBar: MatSnackBar) {
+  constructor( 
+    private matSnackBar: MatSnackBar,
+    private matDialog: MatDialog
+  ) {
     this.answerList = [];
   }
 
@@ -87,8 +93,16 @@ export class AnswerComponent {
   }
 
   openEditDialog(answer: AnswerResponse) {
-    // open edit dialog
-    // const dialogRef = this.matDialog.open(EditAnswerComponent);
+    // Open dialog to edit the answer
+    const dialogRef = this.matDialog.open(EditAnswerComponent, {
+      data: {
+        id: answer.id,
+        answer: answer.answer,
+        datePosted: answer.datePosted,
+        questionId: answer.questionId,
+        userId: answer.user.id
+      }
+    });
   }
 
   deleteAnswer(answerId: number) {
