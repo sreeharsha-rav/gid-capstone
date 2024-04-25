@@ -27,7 +27,7 @@
         <input placeholder="New topic..." #topicInput [formControl]="topicCtrl"
           [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          (matChipInputTokenEnd)="add($event)">
+          (matChipInputTokenEnd)="add($event)" required>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
           @for (topic of filteredTopics | async; track topic) {
             <mat-option [value]="topic">{{topic}}</mat-option>
@@ -37,7 +37,7 @@
     </form>
     <mat-dialog-actions align="end">
         <button mat-stroked-button color="secondary" mat-dialog-close>Cancel</button>
-        <button mat-raised-button color="primary" [disabled]="addForm.invalid" (click)="addQuestion()" mat-dialog-close>Add</button>
+        <button mat-raised-button color="primary" [disabled]="addForm.invalid" (click)="addQuestion()">Add</button>
     </mat-dialog-actions>
     </mat-dialog-content>
 </div>

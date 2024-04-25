@@ -1,5 +1,5 @@
 import { Component, inject, ElementRef, ViewChild } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,6 +17,8 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {StorageService} from '../../../login_signup/service/storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { QuestionRequest } from '../../data-access/question-request.interface';
+import { QuestionResponse } from '../../data-access/question-response.interface';
+import { TopicService } from '../../../topic/data-access/topic.service';
 
 
 @Component({
@@ -67,18 +69,22 @@ import { QuestionRequest } from '../../data-access/question-request.interface';
  * addQuestion() - add a question by utilizing the question service to make an API call
  */
 export class AddQuestionComponent {
-  addForm: any;
+  addForm: any; // Form to add a question
 
   private questionService = inject(QuestionService);
+  private topicService = inject(TopicService);
   announcer = inject(LiveAnnouncer);
 
   separatorKeysCodes: number[] = [ENTER, COMMA];  // Separator key codes
   topicCtrl = new FormControl();  // Topic control
   filteredTopics: Observable<string[]>; 
   topics: string[] = []; // Initial value
-  allTopics: string[] = []; // All topics - TODO: Fetch from API
+  allTopics: string[] = []; // All topics from the database
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(
+    private snackBar: MatSnackBar,
+    private dialogRef: MatDialogRef<AddQuestionComponent>
+  ) {
     // Filter topics
     this.filteredTopics = this.topicCtrl.valueChanges.pipe(
       startWith(null),
@@ -86,8 +92,17 @@ export class AddQuestionComponent {
     );
   }
 
-  // Initialize form
   ngOnInit(): void {
+    // get all topics
+    this.topicService.getAllTopics().subscribe({
+      next: (res) => {
+        this.allTopics = res.map((topic) => topic.name);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+    // Initialize form
     this.addForm = new FormGroup({
       title: new FormControl(''),
       body: new FormControl(''),
@@ -143,13 +158,18 @@ export class AddQuestionComponent {
       userId: StorageService.getUserId() // Get user ID from local storage
     };
     // Make API call
+    let newQuestion: QuestionResponse;
     this.questionService.addQuestion(questionReq).subscribe({
       next: (res) => {
-        console.log(res);
+        // Show snackbar message
         if (res) {
           this.snackBar.open('Question added successfully', 'Close', {
             duration: 2000,
           });
+        // Assign the new question
+        newQuestion = res;
+        // Close the dialog
+        this.dialogRef.close(newQuestion);
         } else {
           this.snackBar.open('Failed to add question', 'Close', {
             duration: 2000,

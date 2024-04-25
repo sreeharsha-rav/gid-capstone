@@ -9,6 +9,8 @@ import { MatDivider } from '@angular/material/divider';
 import { QuestionResponse } from '../../data-access/question-response.interface';
 import { formatDate } from '../../../shared/util/formatDate';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { EditQuestionComponent } from '../../feature/edit-question/edit-question.component';
 
 @Component({
   selector: 'app-question',
@@ -18,7 +20,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    MatDivider
+    MatDivider,
+    EditQuestionComponent
   ],
   template: `
    @if (questionList.length === 0) {
@@ -39,7 +42,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="openEditDialog(question)">
               <span>Edit</span>
             </button>
             <button mat-menu-item (click)="deleteQuestion(question.id)">
@@ -128,6 +131,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   * snackBar: MatSnackBar - Angular material snack bar service
   * getFormattedDate(date: string) - formats the date in a readable format
   * navigateToAnswers(question: QuestionResponse) - navigates to the answers page for a question
+  * openEditDialog(currentQuestion: QuestionResponse) - opens the edit dialog for a question
   * deleteQuestion(id: number) - deletes a question from the database
   */
 export class QuestionComponent {
@@ -136,7 +140,10 @@ export class QuestionComponent {
   private questionService = inject(QuestionService);
   private router = inject(Router);
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(
+    private snackBar: MatSnackBar,
+    private matDialog: MatDialog
+  ) {}
 
   getFormattedDate(date: string): string {
     return formatDate(date);
@@ -147,6 +154,20 @@ export class QuestionComponent {
       state: { 
         question: question 
       }     
+    });
+  }
+
+  openEditDialog(currentQuestion: QuestionResponse) {
+    // Open the edit dialog
+    const dialogRef = this.matDialog.open(EditQuestionComponent, {
+      data: { 
+        id: currentQuestion.id,
+        title: currentQuestion.title,
+        body: currentQuestion.body,
+        datePosted: currentQuestion.datePosted,
+        topics: currentQuestion.topics,
+        user: currentQuestion.user
+      }
     });
   }
 

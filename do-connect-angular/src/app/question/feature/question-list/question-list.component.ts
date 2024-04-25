@@ -67,7 +67,13 @@ export class QuestionListComponent {
   }
 
   openAddDialog() {
-    this.matDialog.open(AddQuestionComponent);
+    const dialogRef = this.matDialog.open(AddQuestionComponent);
+    // refresh the question list after the dialog is closed
+    dialogRef.afterClosed().subscribe((newQuestion) => {
+      if (newQuestion) {
+        this.questionList = [...this.questionList, newQuestion];
+      }
+    });
   }
 
   getAllQuestions() {

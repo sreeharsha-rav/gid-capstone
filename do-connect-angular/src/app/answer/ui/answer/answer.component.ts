@@ -1,10 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { AnswerResponse } from '../../data-access/answer-response.interface';
 import { formatDate } from '../../../shared/util/formatDate';
+import { AnswerService } from '../../data-access/answer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-answer',
@@ -13,7 +16,8 @@ import { formatDate } from '../../../shared/util/formatDate';
     MatDivider,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   template: `
   @for (answer of answerList; track answer.id) {
@@ -31,7 +35,7 @@ import { formatDate } from '../../../shared/util/formatDate';
             <button mat-menu-item>
               <span>Edit</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="deleteAnswer(answer.id)">
               <span>Delete</span>
             </button>
           </mat-menu>
@@ -72,12 +76,43 @@ import { formatDate } from '../../../shared/util/formatDate';
 export class AnswerComponent {
   @Input() answerList: AnswerResponse[];
 
-  constructor() {
+  private answerService = inject(AnswerService);
+
+  constructor( private matSnackBar: MatSnackBar) {
     this.answerList = [];
   }
 
   getFormattedDate(date: string): string {
     return formatDate(date);
+  }
+
+  openEditDialog(answer: AnswerResponse) {
+    // open edit dialog
+    // const dialogRef = this.matDialog.open(EditAnswerComponent);
+  }
+
+  deleteAnswer(answerId: number) {
+    this.answerService.deleteAnswer(answerId).subscribe({
+      next: (res) => {
+        if (res) {
+          this.matSnackBar.open('Answer deleted successfully', 'Close', {
+            duration: 2000
+          });
+          this.answerList = this.answerList.filter((answer) => answer.id !== answerId);
+          this.answerList = [...this.answerList];
+        } else {
+          this.matSnackBar.open('Failed to delete answer', 'Close', {
+            duration: 2000
+          });
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        this.matSnackBar.open('An error occurred while deleting the answer', 'Close', {
+          duration: 2000
+        });
+      }
+    });
   }
 
 }

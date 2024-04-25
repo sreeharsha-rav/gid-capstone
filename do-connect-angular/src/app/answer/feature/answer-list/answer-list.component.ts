@@ -31,18 +31,18 @@ import { PostAnswerComponent } from '../post-answer/post-answer.component';
         <mat-card-header>
           <mat-card-title>{{ currentQuestion.title }}</mat-card-title>
           <!-- Question Edit/Delete Menu -->
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
             <mat-icon>more_vert</mat-icon>
-          </button>
+          </button> -->
           <!-- Question Menu -->
-          <mat-menu #menu="matMenu">
+          <!-- <mat-menu #menu="matMenu">
             <button mat-menu-item>
               <span>Edit</span>
             </button>
             <button mat-menu-item>
               <span>Delete</span>
             </button>
-          </mat-menu>
+          </mat-menu> -->
         </mat-card-header>
         <mat-card-content>
           <p>{{ currentQuestion.body }}</p>
@@ -76,7 +76,7 @@ import { PostAnswerComponent } from '../post-answer/post-answer.component';
       }
     </div>
     <!-- Post Answer -->
-    <app-post-answer></app-post-answer>
+    <app-post-answer [currentQuestion]="currentQuestion"></app-post-answer>
   `,
   styles: `
     .question-card {
@@ -131,6 +131,15 @@ import { PostAnswerComponent } from '../post-answer/post-answer.component';
     }
   `
 })
+/*
+ * Answer List Component - this component is used to display a list of answers for a question
+  * currentQuestion: any - the current question being answered
+  * answerList: AnswerResponse[] - list of answers
+  * answerService: AnswerService - service to handle all CRUD operations for answers
+  * router: Router - Angular router service
+  * getFormattedDate() - formats the date to a readable format
+  * getAnswersByQuestionId() - retrieves all answers for a question
+  */
 export class AnswerListComponent {
   currentQuestion: any;
   answerList: AnswerResponse[] = [];
