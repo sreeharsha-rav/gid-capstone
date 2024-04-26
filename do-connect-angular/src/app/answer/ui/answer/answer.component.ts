@@ -76,6 +76,16 @@ import { EditAnswerComponent } from '../../feature/edit-answer/edit-answer.compo
     }
   `
 })
+/*
+ * Answer Component - this component is used to display a list of answers
+ * answerList: AnswerResponse[] - list of answers
+ * answerService: AnswerService - service to handle all CRUD operations for answers
+ * matSnackBar: MatSnackBar - snack bar service to display messages
+ * matDialog: MatDialog - dialog service to open dialogs
+ * getFormattedDate() - formats the date to be displayed
+ * openEditDialog() - opens the edit answer dialog
+ * deleteAnswer() - deletes an answer
+ */
 export class AnswerComponent {
   @Input() answerList: AnswerResponse[];
 
@@ -101,6 +111,18 @@ export class AnswerComponent {
         datePosted: answer.datePosted,
         questionId: answer.questionId,
         userId: answer.user.id
+      }
+    });
+    // refresh the answer list after the dialog is closed
+    dialogRef.afterClosed().subscribe((editedAnswer) => {
+      if (editedAnswer) {
+        this.answerList = this.answerList.map((answer) => {
+          if (answer.id === editedAnswer.id) {
+            return editedAnswer;
+          }
+          return answer;
+        });
+        this.answerList = [...this.answerList];
       }
     });
   }
