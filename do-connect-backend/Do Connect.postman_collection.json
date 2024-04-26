@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "6afbf26b-2fa1-482f-bb49-6152da977d95",
+		"name": "Do Connect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28103794"
+	},
+	"item": [
+		{
+			"name": "Monolithic",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "Create new user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"user1\",\r\n    \"email\": \"user1@test.com\",\r\n    \"password\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/signup"
+							},
+							"response": []
+						},
+						{
+							"name": "Authenticate user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"user1\",\r\n    \"password\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/authenticate"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "question",
+					"item": [
+						{
+							"name": "create a new question",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"test title\",\r\n    \"body\": \"test body\",\r\n    \"topics\": [\"test\"],\r\n    \"userId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/api/questions"
+							},
+							"response": []
+						},
+						{
+							"name": "get all questions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/api/questions"
+							},
+							"response": []
+						},
+						{
+							"name": "get question by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/api/questions/9"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete question by id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8080/api/questions/9"
+							},
+							"response": []
+						},
+						{
+							"name": "Update question by id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"test title 2\",\r\n    \"body\": \"test body 2\",\r\n    \"topics\": [\"test\"],\r\n    \"userId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/api/questions/9"
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": {
+							"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxMzUzNzEzOCwiZXhwIjoxNzEzNTczMTM4fQ.IShFByQBQPYrb_9UiNMTsYf0TfUa6EzPWF6Wl7TSVcw"
+						}
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "topic",
+					"item": [
+						{
+							"name": "get all topics",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/api/topics"
+							},
+							"response": []
+						},
+						{
+							"name": "Get topic by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/api/topics/2"
+							},
+							"response": []
+						},
+						{
+							"name": "create new topic",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxMjg1MDI5NywiZXhwIjoxNzEyODg2Mjk3fQ.7i8DLlKmIWg9ORxyiImYS6Xr0_9817QEWZ0vU-1JyS8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Production\",\r\n    \"description\": \"Environment where software applications are deployed and used by end-users\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/api/topics"
+							},
+							"response": []
+						},
+						{
+							"name": "get topic by name",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/api/topics/name/java"
+							},
+							"response": []
+						},
+						{
+							"name": "delete topic by id",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxMjg1MDI5NywiZXhwIjoxNzEyODg2Mjk3fQ.7i8DLlKmIWg9ORxyiImYS6Xr0_9817QEWZ0vU-1JyS8",
+										"type": "text"
+									}
+								],
+								"url": "http://localhost:8080/api/topics/1"
+							},
+							"response": []
+						},
+						{
+							"name": "Update topic by id",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxMjg1MDI5NywiZXhwIjoxNzEyODg2Mjk3fQ.7i8DLlKmIWg9ORxyiImYS6Xr0_9817QEWZ0vU-1JyS8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"java\",\r\n    \"description\": \"Java programming language\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/api/topics/2"
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": {
+							"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxMzUzNzEzOCwiZXhwIjoxNzEzNTczMTM4fQ.IShFByQBQPYrb_9UiNMTsYf0TfUa6EzPWF6Wl7TSVcw"
+						}
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "answer",
+					"item": [
+						{
+							"name": "get all answers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/api/answers"
+							},
+							"response": []
+						},
+						{
+							"name": "add a answer",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"answer\": \"test answer 2\",\r\n    \"questionId\": 1,\r\n    \"userId\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/api/answers"
+							},
+							"response": []
+						},
+						{
+							"name": "get answer by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/api/answers/1"
+							},
+							"response": []
+						},
+						{
+							"name": "update answer by id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"answer\": \"test answer updated\",\r\n    \"questionId\": 1,\r\n    \"userId\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/api/answers/1"
+							},
+							"response": []
+						},
+						{
+							"name": "get answers by question id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/api/answers/question/1"
+							},
+							"response": []
+						},
+						{
+							"name": "delete answer by id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:8080/api/answers/1"
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": {
+							"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxMzUzNzEzOCwiZXhwIjoxNzEzNTczMTM4fQ.IShFByQBQPYrb_9UiNMTsYf0TfUa6EzPWF6Wl7TSVcw"
+						}
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "get all questions by topic id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxMzUzNzEzOCwiZXhwIjoxNzEzNTczMTM4fQ.IShFByQBQPYrb_9UiNMTsYf0TfUa6EzPWF6Wl7TSVcw"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/topics/4/questions"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Bearer Token",
+			"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxMjg1MDI5NywiZXhwIjoxNzEyODg2Mjk3fQ.7i8DLlKmIWg9ORxyiImYS6Xr0_9817QEWZ0vU-1JyS8"
+		}
+	]
+}

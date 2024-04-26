@@ -52,6 +52,16 @@ import { AnswerRequest } from '../../data-access/answer-request.interface';
     }
   `
 })
+/*
+ * EditAnswerComponent is a dialog component that allows users to edit an answer.
+ * editForm: FormGroup - form group for the edit answer form
+ * currentAnswer: any - current answer object
+ * answerService: AnswerService - service to interact with the answer API
+ * snackBar: MatSnackBar - service to show snack bar messages
+ * data: any - data passed to the dialog
+ * ngOnInit() - lifecycle hook that initializes the edit form
+ * editAnswer() - method to edit the answer
+ */
 export class EditAnswerComponent {
   editForm: any;
   currentAnswer: any;

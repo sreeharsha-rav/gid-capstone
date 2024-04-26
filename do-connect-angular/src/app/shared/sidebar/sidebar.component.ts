@@ -28,7 +28,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
         @if (isUserLoggedIn === true) {
           <button mat-button routerLink="/questions">Questions</button>
           <button mat-button routerLink="/topics">Topics</button>
-          <button mat-button routerLink="/messages">Messages</button>
+          <!-- TODO: <button mat-button routerLink="/messages">Messages</button> -->
         }
       </div>
       <br>
